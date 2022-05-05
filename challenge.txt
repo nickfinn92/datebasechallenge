@@ -1,0 +1,172 @@
+Sakila Challenge SQL;
+1. List all actors
+SELECT * FROM actor;
+
+2. Find the surname of the actor with the forename 'John'.
+Suvari
+SELECT * FROM actor WHERE first_name = 'John'
+
+3. Find all actors with surname 'Neeson'.
+Christian, Jayne.
+SELECT * FROM actor WHERE last_name = 'Neeson';
+
+4. Find all actors with ID numbers divisible by 10.
+SELECT * FROM actor WHERE (actor_id % 10)=0;
+
+5. What is the description of the movie with an ID of 100?
+SELECT description FROM film where film_id = 100;
+
+6. Find every R rated movie.
+SELECT title, rating FROM film WHERE rating = 'r';
+
+7. Find every non-R-rated movie.
+SELECT title, rating FROM film WHERE rating != 'r';
+
+8.Find the ten shortest movies.
+SELECT * FROM film ORDER BY length ASC LIMIT 10;
+
+9. Find the movies with the longest runtime, without using LIMIT .
+SELECT title
+FROM film
+WHERE length = (
+    SELECT MAX(length)
+    FROM film
+);
+
+10. Find all movies that have deleted scenes.
+SELECT * FROM film WHERE special_features = 'Deleted scenes';
+
+11. Using HAVING , reverse-alphabetically list the last names that are not repeated.
+SELECT last_name FROM actor GROUP BY last_name HAVING COUNT(last_name) = 1 ORDER BY last_name DESC;
+
+12. Using HAVING , list the last names that appear more than once, from highest to lowest frequency
+SELECT last_name FROM actor GROUP by last_name HAVING COUNT(last_name) > 1 ORDER BY COUNT(last_name) DESC;
+
+13. Which actor has appeared in the most films? 
+SELECT first_name, last_name, COUNT(*) FROM actor
+JOIN film_actor ON actor.actor_id=film_actor.actor_id
+GROUP BY actor.actor_id ORDER BY COUNT(*) DESC;
+
+14. 'Academy Dinosaur' has been rented out, when is it due to be returned? **
+SELECT rental.return_date, inventory.film_id, inventory.inventory_id FROM rental 
+JOIN inventory ON rental.inventory_id= inventory.inventory_id 
+WHERE film_id=
+(SELECT film_id FROM film WHERE title='Academy Dinosaur');
+
+
+15. What is the average runtime of all films?
+SELECT AVG(length) FROM film;
+
+16. List the average runtime for every film category. **
+
+
+
+17. List all movies featuring a robot.
+SELECT * FROM film WHERE description LIKE'%robot%';
+
+18. How many movies were released in 2010?
+SELECT * FROM film WHERE release_year='%2010%';
+
+19. Find the titles of all the horror movies **
+
+
+20. List the full name of the staff member with the ID of 2.
+SELECT first_name, last_name FROM staff WHERE staff_id = '2';
+
+21. List all the movies that Fred Costner has appeared in.
+
+
+22. How many distinct countries are there?
+SELECT * FROM country;
+
+23. List the name of every language in reverse-alphabetical order.
+SELECT * FROM language ORDER BY name DESC;
+
+
+24. List the full names of every actor whose surname ends with '-son' in alphabetical order by their forename.
+SELECT * FROM actor WHERE last_name LIKE'%SON' ORDER BY first_name ASC;
+
+25. Which category contains the most films?
+SELECT
+
+
+WOLRD Challenge
+1. Using COUNT , get the number of cities in the USA.
+SELECT COUNT(CountryCode)
+FROM city
+WHERE CountryCode LIKE'%usa%'; 
+
+
+2. Find out the population and life expectancy for people in Argentina.
+SELECT LifeExpectancy, Population FROM country WHERE name LIKE'%ARGENTINA%';
+
+3. Using IS NOT NULL , ORDER BY , and LIMIT , which country has the highest life expectancy?
+SELECT * FROM country WHERE LifeExpectancy IS NOT NULL ORDER BY LifeExpectancy DESC LIMIT 10;
+
+4. Using JOIN ... ON , find the capital city of Spain. **
+
+5. Using JOIN ... ON , list all the languages spoken in the Southeast Asia region. **
+
+6. Using a single query, list 25 cities around the world that start with the letter F.
+SELECT * FROM city WHERE name LIKE'F%' LIMIT 25;
+
+7. Using COUNT and JOIN ... ON , get the number of cities in China.
+
+8. Using IS NOT NULL , ORDER BY , and LIMIT , which country has the lowest population? Discard non-zero populations.
+SELECT * FROM country WHERE LifeExpectancy IS NOT NULL ORDER BY LifeExpectancy ASC LIMIT 3;
+
+9. Using aggregate functions, return the number of countries the database contains.
+SELECT COUNT(name) from country;
+
+10. What are the top ten largest countries by area?
+SurfaceArea
+SELECT * FROM country ORDER BY SurfaceArea DESC limit 10;
+
+11. List the five largest cities by population in Japan.
+SELECT * FROM city WHERE CountryCode = 'JPN' ORDER BY Population DESC LIMIT 5;
+
+12. List the names and country codes of every country with Elizabeth II as its Head of State. You will need to fix the mistake first!
+UPDATE Country
+SET HeadOfState = replace(HeadOfState,'Elisabeth II','Elizabeth II');
+
+SELECT Name, Code FROM country WHERE HeadOfState = 'Elizabeth II'
+
+13. List the top ten countries with the smallest population-to-area ratio. Discard any countries with a ratio of 0.
+SELECT name , population/surfacearea AS population_to_area_ratio FROM country WHERE population !=0 ORDER BY population_to_area_ratio ASC LIMIT 10;
+
+14. List every unique world language.
+SELECT DISTINCT Language
+FROM countryLanguage;
+
+15. List the names and GNP of the world's top 10 richest countries.
+SELECT name, GNP FROM country ORDER BY GNP DESC LIMIT 10;
+
+
+16. List the names of, and number of languages spoken by, the top ten most multilingual countries.**
+
+17. List every country where over 50% of its population can speak German.**
+
+18. Which country has the worst life expectancy? Discard zero or null values.
+SELECT name, LifeExpectancy FROM country WHERE LifeExpectancy !=0 ORDER BY LifeExpectancy LIMIT 1;
+
+19. List the top three most common government forms.
+SELECT GovernmentForm, COUNT(GovernmentForm) AS `Most Common` FROM country GROUP BY GovernmentForm ORDER BY `Most Common` DESC LIMIT 1;
+
+20. How many countries have gained independence since records began?
+SELECT COUNT(IndepYear)
+FROM country
+WHERE IndepYear > '0';
+
+
+Movielens Challenge SQL
+1. List the titles and release dates of movies released between 1983-1993 in reverse chronological order.
+
+
+2. Without using LIMIT , list the titles of the movies with the lowest average rating.
+3. List the unique records for Sci-Fi movies where male 24-year-old students have given 5-star ratings.
+4. List the unique titles of each of the movies released on the most popular release day.
+5. Find the total number of movies in each genre; list the results in ascending numeric order
+
+
+
+
